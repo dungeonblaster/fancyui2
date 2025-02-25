@@ -31,9 +31,9 @@
     }
   ],
   "compatibility": {
-    "minimum": "9",
-    "verified": "12.237",
-    "maximum": "12"
+    "minimum": "13",
+    "verified": "13",
+    "maximum": "13"
   },
   "relationships": {
     "systems": [
@@ -42,8 +42,8 @@
         "type": "system",
         "manifest": "https://raw.githubusercontent.com/foundryvtt/dnd5e/master/system.json",
         "compatibility": {
-          "minimum": "3.0.0",
-          "verified": "3.2.0"
+          "minimum": "4.2.0",
+          "verified": "4.3.4"
         }
       }
     ]

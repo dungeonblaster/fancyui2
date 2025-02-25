@@ -3,7 +3,7 @@
         <h4>{{localize "FANCYUI5E.attributes"}}</h4>
         <div class="abilities">
             {{#each abilities as |ab key|}}
-            <div class="ability" data-ability="{{key}}" data-character-id="{{@root/id}}">
+            <div class="ability" data-ability="{{key}}" data-character-id="{{@root.id}}">
                 <div class="ability-wrapper">
                     <span class="name">{{abilityName key}}</span>
                     <span class="mod">{{modifier ab.mod}}</span>
@@ -17,7 +17,7 @@
 
         <ul class="skills">
             {{#each skills as |skill key|}}
-            <li class="skill" data-skill="{{key}}" data-character-id="{{@root/id}}">
+            <li class="skill" data-skill="{{key}}" data-character-id="{{@root.id}}">
                 <span class="name">{{skillName key}}</span>
                 <span class="mod">{{modifier skill.total}}</span>
             </li>
@@ -79,37 +79,21 @@
         <div class="divider"></div>
         <button class="actions-toggle">{{localize "FANCYUI5E.actions"}}</button>
     </div>
-
-    {{!--
-    <div class="character-details">
-        <div class="character-name">
-            {{name}}
-        </div>
-
-        <div class="character-race-class">
-            {{race}} {{class}}
-        </div>
-    </div>
-    --}}
 </div>
 
 <div class="character-actions">
     <div class="character-actions-content">
-        {{#each actions as |actions kind|}}
-        {{#ifNotEmpty actions}}
-        <div class="actions-category">
-            <h4>{{actionTypeName kind}}</h4>
-
+        {{#if actions.length}}
             <div class="action-list">
                 {{#each actions as |a|}}
-                <div class="action item" data-item-id="{{a.id}}" data-character-id="{{@root/id}}">
-                    <img src="{{a.img}}" />
-                    <span>{{a.name}}</span>
-                </div>
+                    <div class="action item" data-item-id="{{a.id}}" data-character-id="{{@root.id}}">
+                        <img src="{{a.img}}" />
+                        <span>{{a.name}}</span>
+                    </div>
                 {{/each}}
             </div>
-        </div>
-        {{/ifNotEmpty}}
-        {{/each}}
+        {{else}}
+            <p style="color: white; text-align: center;">No favorite actions set.</p>
+        {{/if}}
     </div>
 </div>

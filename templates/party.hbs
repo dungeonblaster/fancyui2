@@ -12,12 +12,11 @@
             </div>
             <div class="character-health">
                 <div class="bar-wrapper">
-                    <div class="bar {{hp.status}}" style="width: {{hp.percent}}%"></div>
-
-                    <input type="text" class="current-health" data-value="{{hp.value}}" data-id="{{id}}"
-                        value="{{hp.value}}" />
+                    <div class="bar {{c.hp.status}}" style="width: {{c.hp.percent}}%"></div>
+                    <!-- Mark the HP field as read-only -->
+                    <input type="text" class="current-health" data-value="{{c.hp.value}}" data-id="{{c.id}}" value="{{c.hp.value}}" readonly />
                     <span class="divider">/</span>
-                    <input type="text" value="{{hp.max}}" disabled />
+                    <input type="text" value="{{c.hp.max}}" disabled />
                 </div>
             </div>
         </div>

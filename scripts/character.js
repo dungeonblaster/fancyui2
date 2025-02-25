@@ -1,167 +1,120 @@
-import { isGm } from "./utils.js";
+// character.js
 
+/**
+ * Returns the actor associated with the currently controlled token.
+ * In Foundry VTT v13, tokens may need to be resolved via their document.
+ */
 export function getCharacter() {
-  if (isGm()) {
-    const tokens = canvas.tokens.controlled;
-    if (tokens.length === 0 || tokens.length > 1) return null;
-
-    const token = tokens[0];
-    return game.actors.get(token.document.actorId);
-  }
-
-  let character = game.users.get(game.userId).character;
-  if (!character) {
-    for (let actor of Array.from(game.actors.values())) {
-      if (actor.owner) {
-        character = actor;
-        break;
-      }
+  console.log("Fetching character");
+  const controlled = canvas.tokens?.controlled || [];
+  console.log("Controlled tokens:", controlled);
+  if (controlled.length > 0) {
+    let actor = controlled[0].actor;
+    if (!actor && controlled[0].document) {
+      actor = game.actors.get(controlled[0].document.actorId);
+    }
+    if (actor) {
+      console.log("Found actor:", actor.name);
+      return actor;
     }
   }
-
-  return character;
+  // Fallback for players who have an assigned character.
+  const userCharacter = game.user.character;
+  console.log("Player character:", userCharacter);
+  return userCharacter || undefined;
 }
 
+/**
+ * Returns a list of actors for the party.
+ * If the "party-only-active" setting is enabled, only actors with tokens on the canvas are returned.
+ */
 export function getPartyCharacters() {
-  const showOnlyActive = game.settings.get('fancy-ui-5e', 'party-only-active');
-  const characters = [];
-  for (let user of game.users.values()) {
-    if (user.character && user.character.system) {
-      if (!showOnlyActive || user.active) {
-        characters.push(user.character);
-      }
-    }
+  console.log("Fetching party characters");
+  const partyOnlyActive = game.settings.get("fancy-ui-5e", "party-only-active");
+  const actors = Array.from(game.actors.contents).filter(actor => actor.type === "character");
+  console.log("Found characters:", actors.length);
+  if (partyOnlyActive) {
+    const activeActors = actors.filter(actor => canvas.tokens.placeables.some(t => t.actor?.id === actor.id));
+    console.log("Active party characters:", activeActors.length);
+    return activeActors;
   }
-  return characters;
+  return actors;
 }
 
-export function characterData(c) {
-  const { attributes, details, abilities, skills } = c.system;
-  const items = Array.from(c.items.values());
-
-  const characterClass = items.find((i) => i.type === 'class');
-  let hpPercent = (attributes.hp.value / attributes.hp.max) * 100;
-  if (hpPercent >= 99) {
-    hpPercent = 99;
-  }
-  const ac = Number(attributes.ac.value);
-
-  const actions = items.find((i) => i.getFlag) ? getActions(items) : {};
-
+/**
+ * Builds a data object for a given actor to pass to the Handlebars template.
+ * This function remains synchronous.
+ */
+export function characterData(actor) {
+  console.log("Generating character data for:", actor?.name || "undefined actor");
+  if (!actor) return {};
+  const data = actor.system;
   return {
-    id: c.id,
-    isCharacter: c.type === 'character',
-    name: c.name,
-    level: details.level,
-    race: details.race,
-    class: characterClass?.name || '',
-    armor: isNaN(ac) ? 10 : ac,
-    picture: c.img,
+    id: actor.id,
+    isCharacter: true,
+    name: actor.name,
+    level: data.details?.level || 1,
+    race: data.details?.race || "",
+    class: data.details?.class || "",
+    picture: actor.img,
+    speed: data.attributes?.movement?.walk || 0,
+    ini: (typeof data.attributes?.init === "object" && data.attributes?.init.total !== undefined)
+         ? data.attributes.init.total 
+         : data.attributes?.init || 0,
+    armor: data.attributes?.ac?.value || data.attributes?.ac || "",
     hp: {
-      value: attributes.hp.value,
-      max: attributes.hp.max,
-      percent: hpPercent,
-      status: hpStatus(hpPercent),
+      value: data.attributes?.hp?.value,
+      max: data.attributes?.hp?.max,
+      percent: Math.floor((data.attributes?.hp?.value / data.attributes?.hp?.max) * 100),
+      status: (data.attributes?.hp?.value / data.attributes?.hp?.max) > 0.5 ? "healthy" : "injured"
     },
-    ini: attributes.init.mod || 0,
-    speed: attributes.movement.walk,
-    actions,
-    abilities,
-    skills,
+    abilities: data.abilities,
+    skills: data.skills,
+    actions: getActions(actor)
   };
 }
 
-function getActivationType(activationType) {
-  switch (activationType) {
-    case 'action':
-    case 'bonus':
-    case 'crew':
-    case 'reaction':
-      return activationType;
-    default:
-      return 'other';
+/**
+ * Generates a list of favorite actions based on the actor's items.
+ *
+ * It reads the favorites array from actor.system.favorites and, for each favorite object,
+ * uses fromUuidSync (with the actor as the relative context) to resolve the item.
+ * Only items of allowed types ("spell", "consumable", "weapon", "feat") are included.
+ */
+function getActions(actor) {
+  console.log("Generating actions for actor:", actor.name);
+  const favsArray = actor.system.favorites || [];
+  console.log("Favorites array:", favsArray);
+  const actions = [];
+  for (const fav of favsArray) {
+    if (!fav.id) continue;
+    try {
+      // Resolve the favorite's relative id; e.g., ".Item.eaoSDox05BrFS9Lh"
+      const itemDoc = fromUuidSync(fav.id, { relative: actor });
+      if (!itemDoc) continue;
+      const itemType = itemDoc.data?.type || itemDoc.type;
+      if (!["spell", "consumable", "weapon", "feat"].includes(itemType)) continue;
+      actions.push({
+        id: itemDoc.id,
+        name: itemDoc.name,
+        img: itemDoc.img,
+        sort: fav.sort || 0
+      });
+      console.log("Including favorite action:", itemDoc.name);
+    } catch (err) {
+      console.error("Error resolving favorite id:", fav.id, err);
+    }
   }
+  actions.sort((a, b) => a.sort - b.sort);
+  console.log("Sorted actions:", actions.length);
+  return actions;
 }
 
-function getActions(items) {
-  return items.filter(isItemInActionList).reduce(
-    (acc, item) => {
-      var _a;
-      try {
-        const activationType = getActivationType(
-          (_a = item.system.activation) === null || _a === void 0 ? void 0 : _a.type,
-        );
-        acc[activationType].add(item);
-        return acc;
-      } catch (e) {
-        return acc;
-      }
-    },
-    {
-      action: new Set(),
-      bonus: new Set(),
-      crew: new Set(),
-      reaction: new Set(),
-      other: new Set(),
-    },
-  );
-}
-
+/**
+ * A simplified check to determine if an item should be included.
+ */
 function isItemInActionList(item) {
-  switch (item.type) {
-    case 'weapon': {
-      return item.system.equipped;
-    }
-    case 'equipment': {
-      return item.system.equipped && isActiveItem(item.system.activation?.type);
-    }
-    case 'spell': {
-      // only exclude spells which need to be prepared but aren't
-      const notPrepared =
-        item.system.preparation?.mode === 'prepared' && !item.system.preparation?.prepared;
-      const isCantrip = item.system.level === 0;
-      if (!isCantrip && notPrepared) {
-        return false;
-      }
-      const isReaction = item.system.activation?.type === 'reaction';
-      const isBonusAction = item.system.activation?.type === 'bonus';
-
-      // ASSUMPTION: If the spell causes damage, it will have damageParts
-      const isDamageDealer = item.system.damage?.parts?.length > 0;
-      let shouldInclude = isReaction || isBonusAction || isDamageDealer;
-      return shouldInclude;
-    }
-    case 'feat': {
-      return !!item.system.activation?.type;
-    }
-    default: {
-      return false;
-    }
-  }
-}
-
-function isActiveItem(activationType) {
-  if (!activationType) {
-    return false;
-  }
-  if (['minute', 'hour', 'day', 'none'].includes(activationType)) {
-    return false;
-  }
-  return true;
-}
-
-function hpStatus(percent) {
-  if (percent <= 25) {
-    return 'critical';
-  }
-
-  if (percent <= 50) {
-    return 'injured';
-  }
-
-  if (percent <= 75) {
-    return 'hurt';
-  }
-
-  return 'healthy';
+  console.log("Checking item for action list:", item?.name || "undefined item", item?.type || "undefined type");
+  const type = item.data?.type || item.type;
+  return ["spell", "consumable", "weapon", "feat"].includes(type);
 }

@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&family=Vollkorn:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
 html {
   --gold: #cfc389;
   --gold-dark: #9c9452;
@@ -9,479 +7,18 @@ html {
 }
 
 /**
- * General styles
+ * Player character HUD
  */
-
-body {
-  font-family: 'Lora', serif;
-}
-
-a:hover {
-  text-shadow: 0 0 8px var(--gold-toasted);
-}
-
-textarea:focus {
-  outline: none;
-  box-shadow: 0 0 10px var(--gold-toasted);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(0, 0, 0, 0.2);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--gold-toasted);
-  border-color: var(--gold-toasted);
-}
-
-.ve-window {
-  background: none;
-}
-
-.window-app:not(.dnd5e2) .window-header a {
-  margin-top: 2px !important;
-}
-
-.window-app:not(.dnd5e2) .window-header a:not(.close) {
-  border-bottom: 1px solid #7778 !important;
-  border-radius: 5px;
-  height: 90%;
-  line-height: 25px !important;
-}
-
-.window-app:not(.dnd5e2) .window-header a + a {
-  margin-left: 4px !important;
-}
-
-.window-app:not(.dnd5e2) .window-header a.close {
-  border-bottom: 1px solid #c008 !important;
-  margin-right: -4px !important;
-  border-radius: 5px;
-  height: 90% !important;
-}
-
-.window-app .window-header .pop__btn-open {
-  display: none !important;
-}
-
-.window-app:not(.dnd5e2) .window-content {
-	background: url("/systems/dnd5e/ui/texture1.webp") no-repeat top center / auto 770px, var(--dnd5e-color-parchment) url("/systems/dnd5e/ui/texture2.webp") no-repeat bottom center / auto 704px
-}
-
-.window-app.image-popout .window-content,
-.window-app.sidebar-popout .window-content,
-.window-app.window-popout .window-content {
-	background: rgba(0, 0, 0, 0.5) !important;
-}
-
-.window-app.dnd5e2.create-document .window-content {
-  background: transparent;
-}
-
-#navigation {
-  display: none;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  visibility: hidden;
-  opacity: 0;
-}
-
-#ui-left {
-	justify-content: initial !important;
-}
-
-/**
- * Sidebar
- */
-
- #sidebar {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  position: relative;
-  right: 0px;
-  top: 0px;
-  overflow: visible;
-  width: 360px;
-  padding: 15px 15px;
-  background: none;
-  box-shadow: none;
-  border: none;
-  outline: none;
-}
-
-#sidebar::before {
-  position: absolute;
-  z-index: -1;
-  content: " ";
-  height: calc(100% - 0px);
-  width: 100%;
-  left: 0;
-  top: 0;
-  background: url(../images/backgrounds/chat.webp);
-  background-size: 100% 100%;
-}
-
-#sidebar #sidebar-tabs {
-  padding-left: 5px;
-  border-bottom: 1px solid black;
-  margin-bottom: 0;
-  padding-bottom: 5px;
-  box-shadow: 0 1px 0 black, 0 -1px 0 var(--gold-dark) inset;
-}
-
-#sidebar #chat-log {
-  padding-top: 5px;
-  padding-right: 5px;
-}
-
-#sidebar > section {
-  padding-left: 5px;
-}
-
-section.chat-sidebar .jump-to-bottom > a {
-  width: 335px;
-}
-
-#sidebar #sidebar-tabs {
-  justify-content: center;
-}
-
-#sidebar #sidebar-tabs a.collapse {
-  display: none;
-}
-
-.window-app.image-popout .window-content {
-  background: transparent;
-}
-
-.app.sidebar-popout .window-content {
-  background: none;
-}
-
-#sidebar-tabs {
-  padding-top: 0.5em;
-}
-
-#sidebar-tabs > .item {
-  display: flex;
-  height: 30px;
-  min-width: 30px;
-  align-items: center;
-  justify-content: center;
-}
-
-#sidebar-tabs > .item.active {
-  box-shadow: none;
-  text-shadow: none;
-  background: transparent;
-  border: 1px solid black;
-  box-shadow: 0 0 0 2px var(--gold) inset;
-  border-radius: 50%;
-}
-
-#sidebar-tabs > .item.active::after {
-  position: absolute;
-  content: ' ';
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 50%;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.1) 50%,
-    rgba(0, 0, 0, 0.3) 85%,
-    rgba(0, 0, 0, 0.45) 100%
-  );
-}
-
-#sidebar button,
-.dialog-buttons button {
-  box-shadow: 0 0 0 1px var(--gold) inset, 0 0 0 3px black inset;
-  border: 1px solid black !important;
-  background: black !important;
-  color: white;
-  position: relative;
-  border-radius: 0;
-}
-
-#sidebar button:hover,
-.dialog-buttons button:hover {
-  color: white !important;
-  box-shadow: 0 0 0 1px var(--gold) inset, 0 0 0 3px black inset !important;
-  border: 1px solid black !important;
-}
-
-.sidebar-tab .action-buttons button,
-.dir__btn-header {
-  height: 30px !important;
-}
-
-#sidebar button::after,
-.dialog-buttons button::after {
-  position: absolute;
-  content: ' ';
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.1) 50%,
-    rgba(0, 0, 0, 0.3) 85%,
-    rgba(0, 0, 0, 0.45) 100%
-  );
-}
-
-#sidebar-tabs {
-  border-bottom-color: transparent;
-  box-shadow: none;
-}
-
-/**
- * Chat
- */
-
-#chat-form {
-  height: 50px;
-  flex: 0 0 50px;
-}
-
-#chat-form textarea {
-  border: 1px solid var(--gold-toasted);
-  background: rgba(255, 255, 255, 0.2);
-  height: 50px;
-  color: white;
-}
-
-#sidebar #chat .message {
-  background: #ebdec2;
-  color: #352011;
-  -webkit-box-shadow: 0 0 16px 6px rgba(0, 0, 0, 0.5);
-  box-shadow: 0 0 16px 6px rgba(0, 0, 0, 0.5);
-  border: 12px solid #ebdec2;
-  border-image-outset: 0;
-  border-image-repeat: stretch;
-  border-image-slice: 100%;
-  border-image-source: none;
-  border-image-width: 1;
-  -o-border-image: url(../images/backgrounds/paper.png) 12 repeat;
-  border-image: url(../images/backgrounds/paper.png) 12 repeat;
-  border-image-outset: 0;
-  border-image-outset: 3px;
-  padding: 5px;
-  margin: 3px 3px 12px 3px;
-}
-
-.message::before {
-  background: transparent !important;
-}
-
-:is(.chat-popout, #chat-log) .message::before {
-  background: transparent url("/systems/dnd5e/ui/texture-gray1.webp") no-repeat top left !important;
-  border-radius: 0px !important;
-  filter: hue-rotate(-348deg) saturate(4);
-  left: -4px;
-  right: -4px;
-  top: -4px;
-}
-
-#sidebar #chat .message + .message {
-  margin-top: 5px;
-}
-
-#sidebar #chat .message .message-sender {
-  font-weight: bold;
-}
-
-/**
- * Chat messages dnd5e
- */
-
-.dnd5e.chat-card .card-header {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-  border-top: none;
-  padding: 5px0 0;
-  margin-bottom: 5px;
-}
-
-.dnd5e.chat-card .card-footer {
-  border-top: 1px solid rgba(0, 0, 0, 0.3);
-}
-
-.dnd5e.red-full.chat-card footer.card-footer {
-  margin-top: 5px;
-}
-
-.red-dual .dice-row .dice-row-item + .dice-row-item {
-  margin-left: 5px;
-}
-
-/*
- * Hotbar and controls
- */
-
-#hotbar {
-  display: none;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  visibility: hidden;
-  opacity: 0;
-}
-
-#players.hidden {
-  display: none !important;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  visibility: hidden;
-  opacity: 0;
-}
-
-#players {
-  opacity: .2;
-	position: fixed;
-	bottom: .5rem;
-}
-
-#players:hover {
-  opacity: 1;
-}
-
-#controls {
-  position: fixed;
-  right: 340px;
-  opacity: 1;
-  flex-grow: 0 !important;
-  flex-shrink: 1 !important;
-  flex-basis: auto !important;
-  height: auto;
-  pointer-events: all !important;
-  padding-top: 15px;
-  flex-direction: row-reverse;
-}
-
-#controls:hover {
-  opacity: 1;
-}
-
-#controls ol.control-tools > li.scene-control,
-#controls ol.control-tools > li.control-tool {
-	border-radius: 50%;
-	font-size: 1rem;
-	opacity: .5;
-	transition: opacity 250ms ease-in-out;
-	border: 1px solid rgba(0,0,0,0.5);
-}
-
-#controls ol.control-tools > li.scene-control:hover,
-#controls ol.control-tools > li.scene-control.active,
-#controls ol.control-tools > li.control-tool:hover,
-#controls ol.control-tools > li.control-tool.active {
-  color: white;
-  background-color: rgba(0, 0, 0, 0.7);
-  border: 1px solid rgba(255, 255, 255, .3);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  opacity: 1;
-}
-
-#controls ol.control-tools > li.scene-control:not(.active),
-#controls ol .control-tool {
-  display: inline-block !important;
-}
-
-#controls:hover ol.main-controls .scene-control:not(.active),
-#controls:hover ol.sub-controls .control-tool {
-  display: inline-block !important;
-}
-
-#pause {
-  bottom: calc(50% - 50px);
-}
-
-#logo {
-  display: none !important;
-  height: 0;
-  display: 0;
-}
-
-#combat #combat-round .encounters h3 {
-  font-size: 14px;
-}
-
-/**
- * Journal
- */
-
-.journal-sheet:not(.image-popout) input {
-  background: white;
-  border: none;
-  border-bottom: 1px solid var(--gold);
-  border-radius: 0;
-}
-
-.journal-sheet:not(.image-popout) select {
-  display: none;
-}
-
-.journal-sheet form .editor {
-  height: calc(100% - 72px);
-}
-
-.editor-preview {
-  font-size: 1.3em;
-  font-family: 'Noto Serif', serif;
-}
-
-/**
- * Plutonium
- */
-
-.monsterblock .window-content,
-.ve-window {
-  background: white !important;
-}
-
-.ui-modal__inner {
-  background: white;
-}
-
-.stripe-odd:nth-child(odd),
-.stripe-even:nth-child(even),
-.stripe-odd-table > tbody > tr:nth-child(odd),
-.stripe-even-table > tbody > tr:nth-child(even) {
-  background: rgba(0, 0, 0, 0.05) !important;
-}
-
-.btn.active:hover,
-.btn--active:hover,
-a.btn.active:hover,
-a.btn--active:hover,
-label.btn.active:hover,
-label.btn--active:hover {
-  background: var(--gold-dark) !important;
-  box-shadow: none;
-}
-
-/**
- * Player character hud
- */
-
 #player-character {
   left: calc(50% - 290px);
   position: absolute;
-  bottom: 0;
+  bottom: 120px; /* Adjust as needed */
   display: flex;
   justify-content: center;
-  font-family: 'Vollkorn';
   color: white;
   padding-bottom: 1.2rem;
+  cursor: default;
+  z-index: 50;  /* Lowered so modal windows appear above */
 }
 
 #player-character .character-picture {
@@ -489,7 +26,7 @@ label.btn--active:hover {
   height: 100px;
   background: var(--gold-gradient);
   border: 1px solid black;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6), 1 0 0 rgba(255, 255, 255, 0.4) inset;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6), 1px 0 0 rgba(255, 255, 255, 0.4) inset;
   border-radius: 50%;
   position: relative;
   margin: 1em;
@@ -611,13 +148,12 @@ label.btn--active:hover {
   width: 192px;
   height: 42px;
   background: black;
-  border-radius: 5px;
+  border-radius: 4px;
   border: 1px solid black;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
   margin-top: 3px;
   margin-left: 3px;
   position: relative;
-  border-radius: 4px;
   display: flex;
   align-items: center;
 }
@@ -655,12 +191,11 @@ label.btn--active:hover {
 
 #player-character .character-health input {
   color: white;
-  width: auto;
+  width: 60px;
   border: none;
   outline: none;
   box-shadow: none;
   text-shadow: 0 0 5px var(--text-shadow);
-  width: 60px;
   text-align: center;
   font-size: 1.4em;
   z-index: 3;
@@ -688,9 +223,9 @@ label.btn--active:hover {
   height: 14px;
   width: 1px;
   background-color: var(--gold-dark);
+  position: absolute;
   left: 0;
   top: 7px;
-  position: absolute;
 }
 
 #player-character .character-attrs .attr label {
@@ -722,7 +257,7 @@ label.btn--active:hover {
 #player-character .character-actions.show {
   display: block;
   position: absolute;
-  z-index: 11;
+  z-index: 1100;
   bottom: 130px;
   left: calc(50% - 40px);
 }
@@ -730,7 +265,7 @@ label.btn--active:hover {
 #player-character .character-stats.show {
   display: block;
   position: absolute;
-  z-index: 11;
+  z-index: 1100;
   bottom: 130px;
   left: calc(50% - 290px);
 }
@@ -758,7 +293,6 @@ label.btn--active:hover {
   color: var(--gold);
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  font-family: 'Vollkorn';
   font-size: 0.7em;
   padding: 0.3em 1em;
   margin-top: 0.5em;
@@ -841,7 +375,7 @@ label.btn--active:hover {
 
 #player-character .ability .mod {
   font-size: 1.4em;
-  text-transform: uupercase;
+  text-transform: uppercase;
   font-weight: bold;
   letter-spacing: 0.1em;
   line-height: 1em;
@@ -851,7 +385,6 @@ label.btn--active:hover {
   border-radius: 0 0 3px 3px;
   background-color: var(--gold-dark);
   color: white;
-  font-family: 'Vollkorn';
   font-weight: bold;
   text-transform: uppercase;
   font-size: 0.7em;
@@ -930,15 +463,15 @@ label.btn--active:hover {
 }
 
 /**
- * Party
+ * Party HUD
  */
-
 #party {
   position: absolute;
   left: 0;
   top: 200px;
   color: white;
-  font-family: 'Vollkorn';
+  cursor: default;
+  z-index: 50;
 }
 
 #party .party-character {
@@ -952,7 +485,7 @@ label.btn--active:hover {
   height: 50px;
   background: var(--gold-gradient);
   border: 1px solid black;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6), 1 0 0 rgba(255, 255, 255, 0.4) inset;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6), 1px 0 0 rgba(255, 255, 255, 0.4) inset;
   border-radius: 50%;
   position: relative;
   margin: 0.5em;
@@ -992,11 +525,10 @@ label.btn--active:hover {
   width: 100%;
   height: 100%;
   background: black;
-  border-radius: 5px;
+  border-radius: 4px;
   border: 1px solid black;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
   position: relative;
-  border-radius: 4px;
   display: flex;
   align-items: center;
 }
@@ -1014,12 +546,11 @@ label.btn--active:hover {
 
 #party .character-health input {
   color: white;
-  width: auto;
+  width: 60px;
   border: none;
   outline: none;
   box-shadow: none;
   text-shadow: 0 0 5px var(--text-shadow);
-  width: 60px;
   text-align: center;
   font-size: 1.1em;
   margin-top: 2px;
@@ -1033,9 +564,4 @@ label.btn--active:hover {
   padding-top: 2px;
   z-index: 3;
   text-shadow: 0 0 5px var(--text-shadow);
-}
-
-#party,
-#player-character {
-  z-index: 16;
 }
