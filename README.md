@@ -5,7 +5,7 @@ This module enhances the D&D 5e system in FoundryVTT with a custom UI, originall
 ## Fancy UI 5e
 
 ### Install
-- **Manifest URL**: [Insert your updated manifest URL here once you’ve pushed changes, e.g., `https://github.com/your_username/foundryvtt-fancy-ui-5e/releases/download/v1.6.0/module.json`]
+- **Manifest URL**: 'https://github.com/dungeonblaster/fancyui2/releases/download/v1.0.0/module.json'
 - **Compatibility**: Explicitly designed for FoundryVTT v13 and dnd5e system version 4.3.4.
 
 ### Features
