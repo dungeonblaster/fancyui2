@@ -48,21 +48,22 @@ export async function rollSkill(e) {
  * Rolls a saving throw.
  * Expects the clicked element (or one of its ancestors) to have:
  * - data-character-id : the actor's ID
- * - data-save : the abbreviation of the save to roll (e.g., "str", "dex", etc.)
+ * - data-ability : the abbreviation of the ability for the save (e.g., "str", "dex", etc.)
  */
 export async function rollSave(e) {
   e.preventDefault();
+  e.stopPropagation(); // Prevent event from bubbling up to parent elements
   $(".character-actions").removeClass("show");
   $(".character-stats").removeClass("show");
 
   const element = e.currentTarget.closest("[data-character-id]");
   if (!element) return ui.notifications.warn("No character data found.");
   const characterId = element.dataset.characterId;
-  const save = element.dataset.save;
-  if (!characterId || !save) return ui.notifications.warn("Missing required data attributes.");
+  const ability = element.dataset.ability;
+  if (!characterId || !ability) return ui.notifications.warn("Missing required data attributes.");
   const actor = game.actors.get(characterId);
   if (!actor) return ui.notifications.warn("Actor not found.");
-  await actor.rollSavingThrow(save, { dialog: false });
+  await actor.rollSavingThrow(ability, { dialog: false });
 }
 
 /**
