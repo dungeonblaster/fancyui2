@@ -54,7 +54,7 @@ export function getCharacter() {
 export function getPartyCharacters() {
   console.log("Fetching party characters");
   // Read the setting from the module to check if we only want active characters.
-  const partyOnlyActive = game.settings.get("fancy-ui-5e", "party-only-active");
+  const partyOnlyActive = game.settings.get("fancy-hud-5e", "party-only-active");
   // Get all actors that are characters.
   const actors = Array.from(game.actors.contents).filter(actor => actor.type === "character");
   console.log("Found characters:", actors.length);

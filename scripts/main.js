@@ -63,7 +63,7 @@ async function renderCharacter() {
   console.log("renderCharacter data:", data);
   if (!data) return;
   // Render the character using a Handlebars template.
-  const tpl = await renderTemplate("modules/fancy-ui-5e/templates/character.hbs", data);
+  const tpl = await renderTemplate("modules/fancy-hud-5e/templates/character.hbs", data);
   elem.innerHTML = tpl;
 }
 
@@ -82,7 +82,7 @@ async function renderCharacter() {
 async function renderParty() {
   console.log("Rendering party");
   // Get the module setting "disable-party-hud". If true, we do not render the party HUD.
-  const disablePartyHud = game.settings.get("fancy-ui-5e", "disable-party-hud");
+  const disablePartyHud = game.settings.get("fancy-hud-5e", "disable-party-hud");
   const elem = getOrCreateElement("party");
   if (disablePartyHud) {
     console.log("Party HUD disabled");
@@ -93,7 +93,7 @@ async function renderParty() {
   const characters = getPartyCharacters().map(characterData);
   console.log("renderParty characters:", characters);
   // Render the party using a Handlebars template.
-  const tpl = await renderTemplate("modules/fancy-ui-5e/templates/party.hbs", { characters });
+  const tpl = await renderTemplate("modules/fancy-hud-5e/templates/party.hbs", { characters });
   elem.innerHTML = tpl;
   // Center the party HUD vertically.
   elem.style.top = `${window.innerHeight / 2 - elem.clientHeight / 2}px`;
@@ -243,7 +243,7 @@ Hooks.once("init", () => {
   console.log("Module initialized");
 
   // Register a module setting to control whether only active party characters are shown.
-  game.settings.register("fancy-ui-5e", "party-only-active", {
+  game.settings.register("fancy-hud-5e", "party-only-active", {
     name: game.i18n.localize("FANCYUI5E.config_party_only_active"),
     hint: game.i18n.localize("FANCYUI5E.config_party_only_active_help"),
     scope: "world",
@@ -253,7 +253,7 @@ Hooks.once("init", () => {
   });
 
   // Register a module setting to disable the party HUD.
-  game.settings.register("fancy-ui-5e", "disable-party-hud", {
+  game.settings.register("fancy-hud-5e", "disable-party-hud", {
     name: "Disable Party HUD",
     hint: "When enabled, the party HUD will not be rendered.",
     scope: "world",
