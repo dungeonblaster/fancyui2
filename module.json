@@ -1,12 +1,12 @@
 {
-  "id": "fancy-ui-5e",
-  "title": "Fancy UI 5e",
-  "description": "A polished UI for D&amp;D 5e with party and character panels.",
-  "version": "1.5.0",
+  "id": "fancy-hud-5e",
+  "title": "Fancy HUD 5e",
+  "description": "A simple, beginner-friendly HUD for playing 5e.",
+  "version": "1.0.0",
   "authors": [
     {
-      "name": "Miguel Molina",
-      "url": "https://github.com/erizocosmico",
+      "name": "Fireside Dungeons",
+      "url": "https://github.com/dungeonblaster/fancyui2/",
       "flags": {}
     }
   ],
