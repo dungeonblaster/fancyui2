@@ -1,25 +1,62 @@
+{{!--
+  Party HUD Template
+
+  This template shows the smaller display for each character in your party.
+  It loops through a list of characters (each stored in "c") and for each one, it displays:
+    - A small picture (avatar)
+    - Basic character info like their name and class
+    - Their current health in a simple health bar
+
+  This template is used to quickly see information about all party members on the screen.
+--}}
+
+{{!-- Loop through all characters in the party --}}
 {{#each characters as |c|}}
-<div class="party-character">
+  <div class="party-character">
+  
+    {{!-- This section shows the character's picture.
+         The "data-character" attribute holds the character's ID, so when you click the picture,
+         the game knows which character you are selecting.
+    --}}
     <div class="character-picture" data-character="{{c.id}}">
-        <img src="{{c.picture}}" alt="{{c.name}}" />
+      <img src="{{c.picture}}" alt="{{c.name}}" />
     </div>
 
+    {{!-- This section shows the character's information.
+         It includes the character's name, their class, and their health.
+    --}}
     <div class="character-info">
-        <div class="character-info-wrapper">
-            <div class="character-details">
-                <div class="character-name">{{c.name}}</div>
-                <div class="character-class {{c.class}}"></div>
-            </div>
-            <div class="character-health">
-                <div class="bar-wrapper">
-                    <div class="bar {{c.hp.status}}" style="width: {{c.hp.percent}}%"></div>
-                    <!-- Mark the HP field as read-only -->
-                    <input type="text" class="current-health" data-value="{{c.hp.value}}" data-id="{{c.id}}" value="{{c.hp.value}}" readonly />
-                    <span class="divider">/</span>
-                    <input type="text" value="{{c.hp.max}}" disabled />
-                </div>
-            </div>
+      <div class="character-info-wrapper">
+        <div class="character-details">
+          {{!-- Display the character's name --}}
+          <div class="character-name">{{c.name}}</div>
+          {{!-- Display the character's class.
+               The class value is also used as a CSS class to allow for special styling.
+          --}}
+          <div class="character-class {{c.class}}"></div>
         </div>
+        
+        {{!-- This section shows the character's health.
+             It displays a health bar that visually represents the character's current HP percentage.
+        --}}
+        <div class="character-health">
+          <div class="bar-wrapper">
+            {{!-- The colored health bar whose width is based on the percentage of HP remaining.
+                 "c.hp.status" is a class name (for example, "healthy" or "injured"),
+                 and "c.hp.percent" is a number that sets the width.
+            --}}
+            <div class="bar {{c.hp.status}}" style="width: {{c.hp.percent}}%"></div>
+            
+            {{!-- The current HP is shown in a text input.
+                 It is marked as readonly because players are not allowed to change HP in the party view.
+            --}}
+            <input type="text" class="current-health" data-value="{{c.hp.value}}" data-id="{{c.id}}" value="{{c.hp.value}}" readonly />
+            <span class="divider">/</span>
+            {{!-- The maximum HP is shown in a disabled input field --}}
+            <input type="text" value="{{c.hp.max}}" disabled />
+          </div>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 {{/each}}

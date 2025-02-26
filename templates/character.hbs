@@ -1,99 +1,145 @@
+{{!--
+  Character HUD Template
+
+  This template displays a character’s information (HUD) in a game.
+  It is divided into three main parts:
+    1. The "character-stats" section shows the character’s attributes (like abilities and skills).
+    2. The "character-info" section shows details such as speed, initiative, armor, picture, level, and health.
+    3. The "character-actions" section shows a list of favorite actions (like using a weapon or spell) the character can perform.
+  
+  The template uses Handlebars helpers like "localize", "abilityName", "modifier", and "skillName" to convert data into friendly text.
+  
+  Example:
+    - If the character’s Strength ability has a modifier of 3, the helper "modifier" will display "+3".
+    - If the character has no favorite actions, a message "No favorite actions set." is shown.
+--}}
+
 <div class="character-stats">
-    <div class="character-stats-content">
-        <h4>{{localize "FANCYUI5E.attributes"}}</h4>
-        <div class="abilities">
-            {{#each abilities as |ab key|}}
-            <div class="ability" data-ability="{{key}}" data-character-id="{{@root.id}}">
-                <div class="ability-wrapper">
-                    <span class="name">{{abilityName key}}</span>
-                    <span class="mod">{{modifier ab.mod}}</span>
-                </div>
-                <span class="save">{{localize "FANCYUI5E.save"}}</span>
-            </div>
-            {{/each}}
+  <div class="character-stats-content">
+    {{!-- Header for Attributes Section --}}
+    <h4>{{localize "FANCYUI5E.attributes"}}</h4>
+    
+    {{!-- List of Abilities (like Strength, Dexterity, etc.) --}}
+    <div class="abilities">
+      {{!-- Loop through each ability. "ab" is the ability data and "key" is its identifier. --}}
+      {{#each abilities as |ab key|}}
+      <div class="ability" data-ability="{{key}}" data-character-id="{{@root.id}}">
+        <div class="ability-wrapper">
+          {{!-- Display the localized name for the ability using the helper "abilityName". --}}
+          <span class="name">{{abilityName key}}</span>
+          {{!-- Display the ability modifier (like "+3") using the "modifier" helper. --}}
+          <span class="mod">{{modifier ab.mod}}</span>
         </div>
-
-        <h4>{{localize "FANCYUI5E.skills"}}</h4>
-
-        <ul class="skills">
-            {{#each skills as |skill key|}}
-            <li class="skill" data-skill="{{key}}" data-character-id="{{@root.id}}">
-                <span class="name">{{skillName key}}</span>
-                <span class="mod">{{modifier skill.total}}</span>
-            </li>
-            {{/each}}
-        </ul>
+        {{!-- A button or label for saving throws, localized to the correct language. --}}
+        <span class="save">{{localize "FANCYUI5E.save"}}</span>
+      </div>
+      {{/each}}
     </div>
+
+    {{!-- Header for Skills Section --}}
+    <h4>{{localize "FANCYUI5E.skills"}}</h4>
+    
+    {{!-- List of Skills (like Acrobatics, Athletics, etc.) --}}
+    <ul class="skills">
+      {{!-- Loop through each skill. "skill" is the skill data and "key" is its identifier. --}}
+      {{#each skills as |skill key|}}
+      <li class="skill" data-skill="{{key}}" data-character-id="{{@root.id}}">
+        {{!-- Display the localized name for the skill using "skillName". --}}
+        <span class="name">{{skillName key}}</span>
+        {{!-- Display the total skill modifier using the "modifier" helper. --}}
+        <span class="mod">{{modifier skill.total}}</span>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
 </div>
 
 <div class="character-info">
-    <div class="character-info-top">
-        <form class="character-attrs">
-            <div class="bar-wrapper">
-                <div class="attr">
-                    <label>{{localize "FANCYUI5E.speed"}}</label>
-                    <span>{{speed}} ft</span>
-                </div>
-
-                <div class="attr">
-                    <label>{{localize "FANCYUI5E.initiative"}}</label>
-                    <span>{{modifier ini}}</span>
-                </div>
-
-                <div class="attr">
-                    <label>{{localize "FANCYUI5E.ac"}}</label>
-                    <span>{{armor}}</span>
-                </div>
-            </div>
-        </form>
-
-        <div class="character-picture">
-            <img src="{{picture}}" alt="{{name}}" />
-
-            <div class="sheet" data-character="{{id}}">
-                {{localize "FANCYUI5E.open_sheet"}}
-            </div>
-
-            {{#if isCharacter}}
-            <div class="character-level">
-                <div class="character-level-badge"></div>
-                <span>{{level}}</span>
-            </div>
-            {{/if}}
+  <div class="character-info-top">
+    {{!-- This form shows core attributes: speed, initiative, and armor. --}}
+    <form class="character-attrs">
+      <div class="bar-wrapper">
+        <div class="attr">
+          <label>{{localize "FANCYUI5E.speed"}}</label>
+          <span>{{speed}} ft</span>
+          {{!-- Example: "35 ft" means the character can move 35 feet. --}}
         </div>
-
-        <div class="character-health">
-            <div class="bar-wrapper">
-                <div class="bar {{hp.status}}" style="width: {{hp.percent}}%"></div>
-
-                <input type="text" id="current-health" data-value="{{hp.value}}" data-id="{{id}}"
-                    value="{{hp.value}}" />
-                <span class="divider">/</span>
-                <input type="text" value="{{hp.max}}" disabled />
-            </div>
+        <div class="attr">
+          <label>{{localize "FANCYUI5E.initiative"}}</label>
+          <span>{{modifier ini}}</span>
+          {{!-- Example: If initiative total is 2, it might show "+2". --}}
         </div>
+        <div class="attr">
+          <label>{{localize "FANCYUI5E.ac"}}</label>
+          <span>{{armor}}</span>
+          {{!-- Example: Armor class might be "14". --}}
+        </div>
+      </div>
+    </form>
+
+    {{!-- This area shows the character picture and level badge. --}}
+    <div class="character-picture">
+      <img src="{{picture}}" alt="{{name}}" />
+      {{!-- A clickable overlay (the "sheet" button) to open the character sheet. --}}
+      <div class="sheet" data-character="{{id}}">
+        {{localize "FANCYUI5E.open_sheet"}}
+      </div>
+      {{!-- If the character is a full character (not just a token), show the level badge. --}}
+      {{#if isCharacter}}
+      <div class="character-level">
+        <div class="character-level-badge"></div>
+        <span>{{level}}</span>
+        {{!-- Example: Displays the number "1" if the character is level 1. --}}
+      </div>
+      {{/if}}
     </div>
 
-    <div class="character-buttons">
-        <button class="stats-toggle">{{localize "FANCYUI5E.stats"}}</button>
-        <div class="divider"></div>
-        <button class="actions-toggle">{{localize "FANCYUI5E.actions"}}</button>
+    {{!-- This area displays the character's health (hit points). --}}
+    <div class="character-health">
+      <div class="bar-wrapper">
+        {{!-- A colored bar that visually shows the percentage of health remaining.
+             The "hp.status" is a class (like "healthy" or "injured") and "hp.percent" is a number.
+         --}}
+        <div class="bar {{hp.status}}" style="width: {{hp.percent}}%"></div>
+
+        {{!-- An input field to show current HP that the player can edit.
+             data-value holds the current HP, data-id holds the character's id.
+         --}}
+        <input type="text" id="current-health" data-value="{{hp.value}}" data-id="{{id}}"
+          value="{{hp.value}}" />
+        <span class="divider">/</span>
+        {{!-- This input shows the maximum HP and is disabled (cannot be edited). --}}
+        <input type="text" value="{{hp.max}}" disabled />
+      </div>
     </div>
+  </div>
+
+  {{!-- Buttons to toggle between showing stats and actions. --}}
+  <div class="character-buttons">
+    <button class="stats-toggle">{{localize "FANCYUI5E.stats"}}</button>
+    <div class="divider"></div>
+    <button class="actions-toggle">{{localize "FANCYUI5E.actions"}}</button>
+  </div>
 </div>
 
 <div class="character-actions">
-    <div class="character-actions-content">
-        {{#if actions.length}}
-            <div class="action-list">
-                {{#each actions as |a|}}
-                    <div class="action item" data-item-id="{{a.id}}" data-character-id="{{@root.id}}">
-                        <img src="{{a.img}}" />
-                        <span>{{a.name}}</span>
-                    </div>
-                {{/each}}
-            </div>
-        {{else}}
-            <p style="color: white; text-align: center;">No favorite actions set.</p>
-        {{/if}}
-    </div>
+  <div class="character-actions-content">
+    {{!-- Check if there are any favorite actions. --}}
+    {{#if actions.length}}
+      <div class="action-list">
+        {{!-- Loop through each favorite action.
+             "a" represents a favorite action with id, name, and image.
+         --}}
+        {{#each actions as |a|}}
+          <div class="action item" data-item-id="{{a.id}}" data-character-id="{{@root.id}}">
+            <img src="{{a.img}}" />
+            <span>{{a.name}}</span>
+          </div>
+        {{/each}}
+      </div>
+    {{else}}
+      {{!-- If there are no favorite actions, show this message. --}}
+      <p style="color: white; text-align: center;">No favorite actions set.</p>
+    {{/if}}
+  </div>
 </div>

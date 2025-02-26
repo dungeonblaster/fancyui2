@@ -1,87 +1,103 @@
+/* 
+  Global CSS Variables:
+  These are like special names for colors and styles that you can use anywhere in your CSS.
+  Instead of writing the color code over and over, we give it a name (like --gold) and then use that name.
+*/
 html {
-  --gold: #cfc389;
-  --gold-dark: #9c9452;
-  --gold-toasted: #8a6c3c;
+  --gold: #cfc389;                /* A shiny gold color */
+  --gold-dark: #9c9452;           /* A darker version of the gold color */
+  --gold-toasted: #8a6c3c;        /* Another variant of gold with a toasted look */
   --gold-gradient: linear-gradient(180deg, var(--gold) 0%, var(--gold-toasted) 100%);
-  --text-shadow: rgba(0, 0, 0, 0.9);
+                                /* A gradient that goes from --gold at the top to --gold-toasted at the bottom */
+  --text-shadow: rgba(0, 0, 0, 0.9);  /* A dark shadow for text */
 }
 
-/**
- * Player character HUD
- */
+/* 
+  Player Character HUD:
+  This section styles the main display (HUD) for the player's character.
+  It positions the player's info on the screen and gives it colors and fonts.
+*/
+
+/* The container for the player character HUD */
 #player-character {
-  left: calc(50% - 290px);
-  position: absolute;
-  bottom: 120px; /* Adjust as needed */
-  display: flex;
-  justify-content: center;
-  color: white;
-  padding-bottom: 1.2rem;
-  cursor: default;
-  z-index: 50;  /* Lowered so modal windows appear above */
+  left: calc(50% - 290px);       /* Horizontally centered using a calculation */
+  position: absolute;            /* Fixed position on the screen */
+  bottom: 120px;                 /* Positioned 120px from the bottom of the screen */
+  display: flex;                 /* Uses flexbox to arrange its content */
+  justify-content: center;       /* Centers its children horizontally */
+  color: white;                  /* Text color is white */
+  padding-bottom: 1.2rem;        /* Extra space at the bottom */
+  cursor: default;              /* The mouse cursor remains the default arrow */
+  z-index: 50;                  /* Z-index is set so that it appears above some elements, but below modal windows */
 }
 
+/* Styles for the character picture within the HUD */
 #player-character .character-picture {
-  width: 100px;
-  height: 100px;
-  background: var(--gold-gradient);
-  border: 1px solid black;
+  width: 100px;                  /* The picture is 100 pixels wide */
+  height: 100px;                 /* The picture is 100 pixels tall */
+  background: var(--gold-gradient);  /* Background uses the gold gradient defined above */
+  border: 1px solid black;       /* A thin black border around the picture */
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.6), 1px 0 0 rgba(255, 255, 255, 0.4) inset;
-  border-radius: 50%;
-  position: relative;
-  margin: 1em;
-  z-index: 10;
+                                /* A shadow outside and an inset white shadow */
+  border-radius: 50%;            /* Makes the picture round */
+  position: relative;            /* Positioned relative for any inner absolute positioning */
+  margin: 1em;                   /* Margin around the picture */
+  z-index: 10;                  /* Ensures this element is above some others in its container */
 }
 
+/* Styles for the image inside the character picture */
 #player-character .character-picture img {
-  background-size: cover;
-  object-fit: cover;
-  width: 90px;
-  height: 90px;
-  margin-top: 4px;
-  margin-left: 4px;
-  border-radius: 50%;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  background-size: cover;        /* The image covers the entire container */
+  object-fit: cover;             /* The image scales nicely without distortion */
+  width: 90px;                   /* Slightly smaller than the container */
+  height: 90px;                  /* Slightly smaller than the container */
+  margin-top: 4px;               /* Small margin from the top */
+  margin-left: 4px;              /* Small margin from the left */
+  border-radius: 50%;            /* Keeps the image round */
+  border: 1px solid rgba(0, 0, 0, 0.5);  /* A semi-transparent black border */
 }
 
+/* Styles for the "sheet" overlay that appears when you hover over the character picture */
 #player-character .character-picture .sheet {
-  opacity: 0;
+  opacity: 0;                    /* It starts out invisible */
 }
 
 #player-character .character-picture:hover .sheet {
-  opacity: 1;
-  height: 100px;
-  width: 100px;
-  border-radius: 50%;
+  opacity: 1;                    /* When you hover, it becomes fully visible */
+  height: 100px;                 /* Covers the full container height */
+  width: 100px;                  /* Covers the full container width */
+  border-radius: 50%;            /* Remains round */
   top: 0;
   left: 0;
-  position: absolute;
-  background: rgba(0, 0, 0, 0.7);
-  text-align: center;
-  line-height: 100px;
-  font-weight: bold;
-  cursor: pointer;
+  position: absolute;            /* Positioned exactly over the picture */
+  background: rgba(0, 0, 0, 0.7);  /* A dark, semi-transparent background */
+  text-align: center;            /* Centers text inside */
+  line-height: 100px;            /* Vertically centers text by matching the height */
+  font-weight: bold;             /* Bold text */
+  cursor: pointer;               /* Cursor changes to a pointer when hovering */
 }
 
+/* Styles for the character's level indicator */
 #player-character .character-level {
   position: absolute;
-  bottom: -10px;
-  left: calc(50% - 13px);
+  bottom: -10px;                 /* Positioned a bit below the picture */
+  left: calc(50% - 13px);         /* Centered horizontally under the picture */
 }
 
 #player-character .character-level-badge {
-  background: var(--gold-gradient);
-  height: 26px;
-  width: 26px;
-  border: 1px solid black;
-  box-shadow: 0 0 10px var(--text-shadow);
-  transform: rotate(45deg);
+  background: var(--gold-gradient);  /* Uses the gold gradient for background */
+  height: 26px;                  /* 26 pixels tall */
+  width: 26px;                   /* 26 pixels wide */
+  border: 1px solid black;       /* Black border */
+  box-shadow: 0 0 10px var(--text-shadow);  /* A shadow for a glowing effect */
+  transform: rotate(45deg);      /* Rotated to make a diamond shape */
   position: absolute;
   z-index: 4;
 }
 
+/* A small black square inside the level badge */
 #player-character .character-level-badge::before {
-  content: ' ';
+  content: ' ';                  /* Inserts a space (an empty element) */
   height: 18.5px;
   width: 18.5px;
   background: black;
@@ -90,29 +106,22 @@ html {
   left: 2.75px;
 }
 
-#player-character .character-level span {
-  display: block;
-  width: 26px;
-  line-height: 26px;
-  text-align: center;
-  z-index: 5;
-  position: relative;
-  font-weight: bold;
-}
-
+/* Styles for the container of character information (like name and race) */
 #player-character .character-info {
   display: flex;
   align-items: center;
-  flex-direction: column;
+  flex-direction: column;       /* Stack items vertically */
 }
 
+/* Styles for the character's name */
 #player-character .character-name {
-  font-size: 1.7em;
+  font-size: 1.7em;              /* Large text */
   font-weight: bold;
   text-align: center;
-  text-shadow: 0 0 5px var(--text-shadow);
+  text-shadow: 0 0 5px var(--text-shadow);  /* Adds a glow effect */
 }
 
+/* Styles for the character's race and class text */
 #player-character .character-race-class {
   font-weight: bold;
   font-style: italic;
@@ -120,12 +129,14 @@ html {
   text-shadow: 0 0 5px var(--text-shadow);
 }
 
+/* Styles for the top part of the character info */
 #player-character .character-info-top {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+/* Styles for both health and attributes boxes in the HUD */
 #player-character .character-health,
 #player-character .character-attrs {
   width: 200px;
@@ -136,6 +147,7 @@ html {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
 }
 
+/* Specific adjustments for health and attributes boxes */
 #player-character .character-health {
   margin-left: -25px;
 }
@@ -144,6 +156,7 @@ html {
   margin-right: -25px;
 }
 
+/* A wrapper for the bars inside the health and attribute boxes */
 #player-character .bar-wrapper {
   width: 192px;
   height: 42px;
@@ -158,17 +171,19 @@ html {
   align-items: center;
 }
 
+/* The colored bar inside the health box that shows current health */
 #player-character .character-health .bar {
   position: absolute;
   left: 1px;
   top: 1px;
   bottom: 1px;
-  width: 75%;
+  width: 75%;                    /* The width shows the percent of health remaining */
   border-radius: 2px;
   z-index: 2;
   box-shadow: 0px 1px 0 1px rgba(255, 255, 255, 0.4) inset;
 }
 
+/* Color variations for health status: healthy, hurt, injured, critical */
 #player-character .character-health .bar.healthy,
 #party .character-health .bar.healthy {
   background: linear-gradient(180deg, rgb(50, 197, 124) 0%, rgb(39, 160, 120) 100%);
@@ -189,6 +204,7 @@ html {
   background: linear-gradient(180deg, rgb(243, 87, 60) 0%, rgb(141, 21, 5) 100%);
 }
 
+/* Styles for the HP input field inside the health box */
 #player-character .character-health input {
   color: white;
   width: 60px;
@@ -202,6 +218,7 @@ html {
   background: transparent;
 }
 
+/* Divider element inside the health box that shows the "/" between current and max HP */
 #player-character .character-health .divider {
   flex: 1;
   text-align: center;
@@ -210,6 +227,7 @@ html {
   text-shadow: 0 0 5px var(--text-shadow);
 }
 
+/* Styles for the attributes inside the attributes box */
 #player-character .character-attrs .attr {
   flex: 1;
   display: flex;
@@ -218,6 +236,7 @@ html {
   position: relative;
 }
 
+/* A small vertical line between attributes */
 #player-character .character-attrs .attr:not(:first-child)::after {
   content: ' ';
   height: 14px;
@@ -228,6 +247,7 @@ html {
   top: 7px;
 }
 
+/* Labels inside the attributes box */
 #player-character .character-attrs .attr label {
   font-weight: bold;
   color: var(--gold);
@@ -237,11 +257,14 @@ html {
   line-height: 1em;
 }
 
+/* Numbers or values inside the attributes box */
 #player-character .character-attrs .attr span {
   font-size: 1.4em;
   line-height: 0.8em;
 }
 
+/* Styles for the hidden panels that show extra actions and stats.
+   They start out hidden (display: none) and then are shown when toggled. */
 #player-character .character-actions,
 #player-character .character-stats {
   background: var(--gold-gradient);
@@ -254,14 +277,16 @@ html {
   display: none;
 }
 
+/* When the actions panel is toggled to show */
 #player-character .character-actions.show {
   display: block;
   position: absolute;
-  z-index: 1100;
+  z-index: 1100; /* High z-index so it appears above other elements */
   bottom: 130px;
   left: calc(50% - 40px);
 }
 
+/* When the stats panel is toggled to show */
 #player-character .character-stats.show {
   display: block;
   position: absolute;
@@ -270,6 +295,7 @@ html {
   left: calc(50% - 290px);
 }
 
+/* Additional spacing for the stats and actions panels */
 #player-character .character-stats {
   margin-right: 2em;
 }
@@ -278,15 +304,17 @@ html {
   margin-left: 2em;
 }
 
+/* The content area inside the actions and stats panels */
 #player-character .character-actions-content,
 #player-character .character-stats-content {
   background: black;
   border: 1px solid black;
   max-height: 350px;
-  overflow-y: auto;
+  overflow-y: auto; /* Allows scrolling if content is too tall */
   border-radius: 5px;
 }
 
+/* Headings inside the actions and stats panels */
 #player-character .character-actions h4,
 #player-character .character-stats h4 {
   font-weight: bold;
@@ -298,10 +326,12 @@ html {
   margin-top: 0.5em;
 }
 
+/* Center the heading in the stats panel */
 #player-character .character-stats h4 {
   text-align: center;
 }
 
+/* Styles for each individual action in the actions panel */
 #player-character .action {
   display: flex;
   align-items: center;
@@ -310,14 +340,17 @@ html {
   transition: all 200ms ease-in-out;
 }
 
+/* When hovering over an action, change its background slightly */
 #player-character .action:hover {
   background-color: rgba(255, 255, 255, 0.3);
 }
 
+/* A line between consecutive actions */
 #player-character .action + .action {
   border-top: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+/* Images inside an action (like a weapon icon) */
 #player-character .action img {
   height: 25px;
   width: 25px;
@@ -327,12 +360,14 @@ html {
   border-radius: 3px;
 }
 
+/* Text inside an action */
 #player-character .action span {
   font-weight: bold;
   padding-left: 1em;
   letter-spacing: 0.05em;
 }
 
+/* Styles for the list of abilities in the HUD */
 #player-character .abilities {
   display: flex;
   flex-wrap: wrap;
@@ -340,15 +375,18 @@ html {
   justify-content: center;
 }
 
+/* Each ability in the list takes up about 27% of the row */
 #player-character .ability {
   width: 27%;
 }
 
+/* Spacing and alignment for abilities (except the first and the fourth) */
 #player-character .ability:not(:first-child):not(:nth-child(4)) {
   margin-left: 4%;
   text-align: center;
 }
 
+/* Wrapper around each ability block */
 #player-character .ability-wrapper {
   border: 1px solid var(--gold-dark);
   cursor: pointer;
@@ -361,10 +399,12 @@ html {
   transition: all 200ms ease-in-out;
 }
 
+/* Hover effect for the ability wrapper */
 #player-character .ability-wrapper:hover {
   background-color: rgba(255, 255, 255, 0.3);
 }
 
+/* Text for the ability name */
 #player-character .ability .name {
   font-size: 0.8em;
   text-transform: uppercase;
@@ -373,6 +413,7 @@ html {
   color: var(--gold);
 }
 
+/* Text for the ability modifier (the number) */
 #player-character .ability .mod {
   font-size: 1.4em;
   text-transform: uppercase;
@@ -381,6 +422,7 @@ html {
   line-height: 1em;
 }
 
+/* Styles for the save button under an ability */
 #player-character .ability .save {
   border-radius: 0 0 3px 3px;
   background-color: var(--gold-dark);
@@ -398,16 +440,19 @@ html {
   text-align: center;
 }
 
+/* Hover effect for the save button */
 #player-character .ability .save:hover {
   background-color: var(--gold);
 }
 
+/* Styles for the skills list */
 #player-character .skills {
-  list-style: none;
+  list-style: none; /* Remove bullet points */
   padding: 0;
   margin: 0;
 }
 
+/* Each skill in the list */
 #player-character .skill {
   display: flex;
   align-items: center;
@@ -417,18 +462,22 @@ html {
   font-weight: bold;
 }
 
+/* Hover effect for skills */
 #player-character .skill:hover {
   background-color: rgba(255, 255, 255, 0.3);
 }
 
+/* Add a border between skills */
 #player-character .skill + .skill {
   border-top: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+/* The name of the skill inside the skill element */
 #player-character .skill .name {
   flex: 1;
 }
 
+/* Container for the buttons under the character HUD */
 #player-character .character-buttons {
   display: flex;
   align-items: center;
@@ -437,6 +486,7 @@ html {
   margin-bottom: 5px;
 }
 
+/* Styles for buttons in the character buttons area */
 #player-character .character-buttons button {
   border-radius: 5px;
   color: white;
@@ -449,37 +499,45 @@ html {
   border: none;
 }
 
+/* Hover effect for character buttons */
 #player-character .character-buttons button:hover {
   background: var(--gold-dark) !important;
 }
 
+/* A divider used between buttons */
 #player-character .character-buttons .divider {
   height: 1px;
   width: 250px;
 }
 
+/* Hide any pseudo-elements (like ::after) on buttons */
 #player-character .character-buttons button::after {
   display: none;
 }
 
-/**
- * Party HUD
- */
+/* 
+  Party HUD Styles:
+  This section styles the party HUD, which shows a smaller view for each character in your party.
+*/
+
+/* The main container for the party HUD */
 #party {
   position: absolute;
   left: 0;
-  top: 200px;
+  top: 200px;           /* 200 pixels from the top */
   color: white;
   cursor: default;
   z-index: 50;
 }
 
+/* Each character in the party */
 #party .party-character {
   position: relative;
   display: flex;
   align-items: center;
 }
 
+/* Styles for the character picture in the party HUD */
 #party .character-picture {
   width: 50px;
   height: 50px;
@@ -493,6 +551,7 @@ html {
   padding: 2px;
 }
 
+/* The image inside a party character picture */
 #party .character-picture img {
   background-size: cover;
   object-fit: cover;
@@ -503,6 +562,7 @@ html {
   cursor: pointer;
 }
 
+/* The character name in the party HUD */
 #party .character-name {
   font-size: 0.9em;
   font-weight: bold;
@@ -510,6 +570,7 @@ html {
   text-shadow: 0 0 3px black, 0 0 5px black, 0 0 7px black, 0 0 15px black;
 }
 
+/* The health box for a party character */
 #party .character-health {
   width: 150px;
   height: 25px;
@@ -521,6 +582,7 @@ html {
   padding: 2px;
 }
 
+/* Wrapper for the health bar in the party HUD */
 #party .bar-wrapper {
   width: 100%;
   height: 100%;
@@ -533,6 +595,7 @@ html {
   align-items: center;
 }
 
+/* The health bar inside the party health box */
 #party .character-health .bar {
   position: absolute;
   left: 1px;
@@ -544,6 +607,7 @@ html {
   box-shadow: 0px 1px 0 1px rgba(255, 255, 255, 0.4) inset;
 }
 
+/* Styles for the HP input field in the party HUD */
 #party .character-health input {
   color: white;
   width: 60px;
@@ -558,6 +622,7 @@ html {
   background: transparent;
 }
 
+/* Divider inside the party health box */
 #party .character-health .divider {
   flex: 1;
   text-align: center;
