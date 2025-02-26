@@ -48,10 +48,10 @@
       }
     ]
   },
-  "bugs": "https://github.com/erizocosmico/foundryvtt-fancy-ui-5e/issues",
-  "changelog": "https://github.com/erizocosmico/foundryvtt-fancy-ui-5e/releases",
-  "download": "https://github.com/erizocosmico/foundryvtt-fancy-ui-5e/releases/download/v1.5.0/module.zip",
-  "manifest": "https://github.com/erizocosmico/foundryvtt-fancy-ui-5e/releases/latest/download/module.json",
-  "readme": "https://github.com/erizocosmico/foundryvtt-fancy-ui-5e/blob/main/README.md",
-  "url": "https://github.com/erizocosmico/foundryvtt-fancy-ui-5e"
+  "bugs": "https://github.com/dungeonblaster/fancyui2/issues",
+  "changelog": "https://github.com/dungeonblaster/fancyui2/releases",
+  "download": "https://github.com/dungeonblaster/fancyui2/releases/download/v1.5.0/module.zip",
+  "manifest": "https://github.com/dungeonblaster/fancyui2/releases/latest/download/module.json",
+  "readme": "https://github.com/dungeonblaster/fancyui2/blob/main/README.md",
+  "url": "https://github.com/dungeonblaster/fancyui2"
 }
