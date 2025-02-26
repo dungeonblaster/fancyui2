@@ -4,7 +4,6 @@
  * This file is the heart of the module. It imports helper functions,
  * loads data from the character file, and sets up event listeners.
  * It also renders the HUD (heads-up display) for both the player character and the party.
- *
  * Think of it like the control center that makes everything show up on your screen
  * and tells the game what to do when you click on things.
  */
@@ -121,6 +120,15 @@ function activatePlayerListeners() {
   $(document).on("click", "#player-character .ability", async (e) => await actions.rollAbility(e));
   $(document).on("click", "#player-character .actions-toggle", toggleActions);
   $(document).on("click", "#player-character .stats-toggle", toggleStats);
+
+  // NEW: Add right-click (contextmenu) listener to open the Paper Doll window.
+  $(document).on("contextmenu", "#player-character .character-picture", (e) => {
+    e.preventDefault(); // Prevent the default browser context menu
+    const actor = getCharacter(); // Retrieve the current character actor
+    if (!actor) return ui.notifications.warn("No character data found.");
+    // Open the Paper Doll window for this actor
+    new ui.paperDoll(actor).render(true);
+  });
 }
 
 /**

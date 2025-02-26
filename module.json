@@ -2,7 +2,7 @@
   "id": "fancy-hud-5e",
   "title": "Fancy HUD 5e",
   "description": "A simple, beginner-friendly HUD for playing 5e.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "authors": [
     {
       "name": "Fireside Dungeons",
@@ -50,7 +50,7 @@
   },
   "bugs": "https://github.com/dungeonblaster/fancyui2/issues",
   "changelog": "https://github.com/dungeonblaster/fancyui2/releases",
-  "download": "https://github.com/dungeonblaster/fancyui2/releases/download/v1.0.2/module.zip",
+  "download": "https://github.com/dungeonblaster/fancyui2/releases/download/v1.0.3/module.zip",
   "manifest": "https://github.com/dungeonblaster/fancyui2/releases/latest/download/module.json",
   "readme": "https://github.com/dungeonblaster/fancyui2/blob/main/README.md",
   "url": "https://github.com/dungeonblaster/fancyui2"
