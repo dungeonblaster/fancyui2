@@ -630,3 +630,21 @@ html {
   z-index: 3;
   text-shadow: 0 0 5px var(--text-shadow);
 }
+
+/* 
+  Paper Doll Popup Styles:
+  This section styles the paper doll popup container to match the look of the Stats and Actions panels.
+*/
+#character-paperdoll {
+  display: none;
+  position: absolute;
+  z-index: 1100; /* Same high z-index as the other HUD popups */
+  bottom: 130px;
+  left: calc(50% - 150px); /* Adjust to center the popup under the HUD */
+  width: 300px; /* Adjust width as needed */
+  background: var(--gold-gradient);
+  border: 1px solid black;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  padding: 5px;
+  border-radius: 5px;
+}
